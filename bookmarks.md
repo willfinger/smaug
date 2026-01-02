@@ -1,5 +1,76 @@
 # Friday, January 2, 2026
 
+## @pk_iv - Claude Chrome Browser Integration
+
+> I spent all of Christmas reverse engineering Claude Chrome so it would work with remote browsers.
+>
+> Here's how Anthropic taught Claude how to browse the web (1/7)
+
+- **Tweet:** https://x.com/pk_iv/status/2005694082627297735
+- **What:** A thread documenting how Anthropic's Claude Chrome extension works under the hood, with focus on remote browser integration. Paul Klein spent time reverse-engineering the extension over the holidays.
+
+---
+
+## @joodalooped - Markwhen Keyboard-Driven Timeline Tool
+
+> for those who prefer keyboard to drag and drop, https://markwhen.com/ is quite nice too
+>
+> *Quoting @karelvuong:* Introducing Lifemap, a new tool to add to your personal annual reviews and 2026 planning. Lifemap lets you conduct a retrospective of your life and develop a roadmap ahead. Every year, my wife and I look forward to the lull during the holidays to work on the biggest project of our lives—ourselves.
+
+- **Tweet:** https://x.com/joodalooped/status/2006089396861427738
+- **Quoted:** https://x.com/karelvuong/status/2005669812199137476
+- **Link:** https://markwhen.com/
+- **Filed:** [Markwhen](./knowledge/tools/markwhen.md)
+- **What:** A keyboard-first timeline tool for planning and visualization. Complementary to Lifemap (the quoted tool), offering text-based input for those who prefer keyboards over drag-and-drop interfaces.
+
+---
+
+## @ShadcnStudio - Shadcn Calendar UI Components
+
+> 🗂️ Shadcn Calendar!
+>
+> Plan, book, and schedule effortlessly with 25 calendar variants built for real-world use cases.
+
+- **Tweet:** https://x.com/ShadcnStudio/status/2005964727806222598
+- **Link:** https://github.com/themeselection/shadcn-studio
+- **Filed:** [Shadcn Studio](./knowledge/tools/shadcn-studio.md)
+- **What:** An extended collection of 25+ shadcn/ui calendar components with variants for single/range picking, multi-month navigation, and time slots. Part of the broader shadcn-studio ecosystem offering customizable UI components and templates.
+
+---
+
+## @marckohlbrugge - Sessy Open-Source SES Email Observability
+
+> Introducing… 💌Sessy
+>
+> Open-source email observability for AWS SES
+>
+> Stop paying $$$ for VC-backed SES wrappers just to get a decent UI. Host your own.
+>
+> 💎 Built on Ruby on Rails
+> 🧑‍💻 Licensed under O'Saasy
+> 💡 Inspired by @37signals' Fizzy
+
+- **Tweet:** https://x.com/marckohlbrugge/status/2005972157445333371
+- **Link:** https://github.com/marckohlbrugge/sessy
+- **Filed:** [Sessy](./knowledge/tools/sessy.md)
+- **What:** A self-hosted Rails application providing beautiful observability and monitoring for Amazon SES, eliminating the need for expensive commercial SES wrappers. Shows events in a timeline: sends, deliveries, clicks, bounces, etc.
+
+---
+
+## @parcadei - Continuous Claude v2 Context Management
+
+> *Replying to @yuzu_4ever's critique of Claude Code:* you need this
+>
+> Context management for Claude Code. Hooks maintain state via ledgers and handoffs. MCP execution without context pollution. Agent orchestration with isolated context windows.
+
+- **Tweet:** https://x.com/parcadei/status/2005755875701776624
+- **Parent:** https://x.com/yuzu_4ever/status/2005520908656500964
+- **Link:** https://github.com/parcadei/Continuous-Claude-v2
+- **Filed:** [Continuous Claude v2](./knowledge/tools/continuous-claude-v2.md)
+- **What:** A Python framework for maintaining session continuity and efficient context management in Claude Code workflows, including ledger-based state persistence, MCP execution isolation, and agent orchestration patterns for multi-agent systems.
+
+---
+
 ## @0xUrvish - uselayouts: Animated React Components Library
 
 > *Replying to @0xUrvish:* Hi developers
