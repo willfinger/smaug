@@ -385,15 +385,15 @@ function getCLISettings(cliType, config, bookmarkCount) {
     return {
       binary: findOpenCode(),
       model,
-      args: ['run', '--format', 'json', '--model', model, '--', prompt],
+      args: ['run', '--format', 'json', '--model', model, prompt],
       env: {
         ...process.env,
         PATH: enhancedPath,
         ...(apiKey ? { ANTHROPIC_API_KEY: apiKey } : {}),
         OPENCODE_MODEL: model
       },
-      shell: isWindows,
-      stdin: 'inherit'
+      shell: false,
+      stdin: 'ignore'
     };
   }
 
