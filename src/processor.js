@@ -60,6 +60,8 @@ export function saveState(config, state) {
 
 function buildBirdEnv(config) {
   const env = { ...process.env };
+  // Note: @jcheesepkg/bird requires --auth-token and --ct0 CLI arguments
+  // Legacy environment variables are kept for compatibility with older bird versions
   if (config.twitter?.authToken) {
     env.AUTH_TOKEN = config.twitter.authToken;
   }
@@ -69,10 +71,24 @@ function buildBirdEnv(config) {
   return env;
 }
 
+/**
+ * Build bird CLI command with credentials as arguments
+ * Required for @jcheesepkg/bird which doesn't read from env vars
+ */
+function buildBirdCommand(birdCmd, config) {
+  const authToken = config.twitter?.authToken;
+  const ct0 = config.twitter?.ct0;
+  
+  if (authToken && ct0) {
+    return `${birdCmd} --auth-token "${authToken}" --ct0 "${ct0}"`;
+  }
+  return birdCmd;
+}
+
 export function fetchBookmarks(config, count = 10, options = {}) {
   try {
     const env = buildBirdEnv(config);
-    const birdCmd = config.birdPath || 'bird';
+    const birdCmd = buildBirdCommand(config.birdPath || 'bird', config);
 
     // Use --all for large fetches (> 50) or when explicitly requested
     const useAll = options.all || count > 50;
@@ -91,7 +107,7 @@ export function fetchBookmarks(config, count = 10, options = {}) {
         : `${birdCmd} bookmarks -n ${count} --json`;
     }
 
-    console.log(`  Running: ${cmd.replace(/--json/, '').trim()}`);
+    console.log(`  Running: ${cmd.replace(/--auth-token "[^"]*"/, '--auth-token "***"').replace(/--ct0 "[^"]*"/, '--ct0 "***"').replace(/--json/, '').trim()}`);
 
     // Use temp file to work around bird CLI pipe buffering bug
     const tmpFile = path.join(os.tmpdir(), `smaug-bookmarks-${Date.now()}.json`);
@@ -114,7 +130,7 @@ export function fetchBookmarks(config, count = 10, options = {}) {
 export function fetchLikes(config, count = 10) {
   try {
     const env = buildBirdEnv(config);
-    const birdCmd = config.birdPath || 'bird';
+    const birdCmd = buildBirdCommand(config.birdPath || 'bird', config);
     // Use temp file to work around bird CLI pipe buffering bug
     const tmpFile = path.join(os.tmpdir(), `smaug-likes-${Date.now()}.json`);
     execSync(`${birdCmd} likes -n ${count} --json > "${tmpFile}"`, {
@@ -204,7 +220,7 @@ export function fetchFromFolders(config, count = 10, options = {}) {
 export function fetchTweet(config, tweetId) {
   try {
     const env = buildBirdEnv(config);
-    const birdCmd = config.birdPath || 'bird';
+    const birdCmd = buildBirdCommand(config.birdPath || 'bird', config);
     const output = execSync(`${birdCmd} read ${tweetId} --json`, {
       encoding: 'utf8',
       timeout: 15000,

@@ -1,13 +1,16 @@
 ---
 title: "Artificial Intelligence and Jobs"
 type: article
+category: ai-ml
+tags: ["ai"]
+priority: low
+rating: 3
+status: unread
 date_added: 2026-01-02
-source: "https://www.nytimes.com/2025/12/28/opinion/artificial-intelligence-jobs.html"
-author: "Unknown (paywalled)"
-tags: [ai, jobs, disruption, labor, technology]
-via: "Twitter bookmark from @DanielNealAdler"
----
+last_updated: 2026-01-21
 
+
+---
 Opinion piece from the New York Times discussing the impact of artificial intelligence on employment. The article addresses the reality of AI-driven job displacement, particularly relevant for tech workers.
 
 Dan Adler notes that even those working in AI need to reconcile with the reality of job disruption. The article suggests this is inevitable and universal across sectors.
@@ -27,3 +30,4 @@ From @DanielNealAdler's commentary: "There's no sense pretending that this isn't
 
 - [NYT Article](https://www.nytimes.com/2025/12/28/opinion/artificial-intelligence-jobs.html)
 - [Original Tweet](https://x.com/DanielNealAdler/status/2006206247054229798)
+

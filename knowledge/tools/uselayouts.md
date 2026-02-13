@@ -1,12 +1,16 @@
 ---
 title: "uselayouts"
 type: tool
+category: web-dev
+tags: ["react", "ai", "open-source", "free", "tailwind"]
+priority: low
+rating: 3
+status: unread
 date_added: 2026-01-02
-source: "https://uselayouts.com"
-tags: ["react", "framer-motion", "animations", "ui-components", "tailwind"]
-via: "Twitter bookmark from @0xUrvish"
----
+last_updated: 2026-01-21
 
+
+---
 Premium animated React components and micro-interactions library built with Framer Motion and Tailwind CSS. Free and open-source collection of modern, ready-to-use motion components for building high-converting websites with sophisticated animations.
 
 ## Key Features
@@ -24,3 +28,4 @@ Premium animated React components and micro-interactions library built with Fram
 - [GitHub](https://github.com/iurvish/uselayouts)
 - [Creator: Urvish Mali](https://urvishh.me)
 - [Original Tweet](https://x.com/0xUrvish/status/2006608646730559629)
+

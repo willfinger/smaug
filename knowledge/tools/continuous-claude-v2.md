@@ -1,15 +1,17 @@
 ---
 title: "Continuous Claude v2"
 type: tool
+category: ai-ml
+tags: ["mcp", "rust", "python", "ai", "agent"]
+priority: low
+rating: 3
+status: unread
 date_added: 2026-01-02
-source: "https://github.com/parcadei/Continuous-Claude-v2"
-tags: [claude-code, context-management, agents, mcp, state-persistence]
-via: "Twitter bookmark from @parcadei"
+last_updated: 2026-01-21
+stars: 1400
+language: Python
 ---
-
 Continuous Claude v2 is a Python framework that solves the context management and session continuity challenges in Claude Code workflows. It enables sophisticated multi-session workflows, agent orchestration, and efficient token management through persistent state, ledger-based tracking, and isolated context windows.
-
-This tool is particularly valuable for developers building complex Claude Code applications that require maintaining state across sessions, coordinating multiple agents, and avoiding context pollution from MCP tool execution.
 
 ## Key Features
 
@@ -22,30 +24,6 @@ This tool is particularly valuable for developers building complex Claude Code a
 - **Token Efficiency** - Compact ledgers and smart context loading
 - **Artifact Index** - Track artifacts and outcomes across sessions
 - **Braintrust Integration** - Session tracing and compound learnings
-
-## Architecture
-
-The framework provides a complete session lifecycle:
-1. **SessionStart** - Load ledger, load handoff, surface learnings
-2. **Working** - PreToolUse preflight, PostToolUse processing, UserPrompt
-3. **PreCompact** - Auto-handoff generation, manual block option
-4. **SessionEnd** - Mark outcomes, cleanup, learn
-
-## Key Concepts
-
-- **Ledger** - Persistent continuity record with reasoning and outcomes
-- **Handoff** - Resume context between sessions with artifact index
-- **Skills** - Reusable operations (commit, create_handoff, resume_handoff)
-- **Agents** - Autonomous subagents with isolated context windows
-- **Hooks** - Extensibility points for custom session logic
-- **Artifact Index** - SQLite+FTS5 for artifact search and outcome tracking
-
-## Technical Details
-
-- **Language:** Python
-- **Repository:** github.com/parcadei/Continuous-Claude-v2
-- **Stars:** 1400+
-- **Use Cases:** Multi-session development, agent workflows, complex Claude Code projects
 
 ## Use Cases
 

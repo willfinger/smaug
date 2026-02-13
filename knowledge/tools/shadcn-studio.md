@@ -1,12 +1,16 @@
 ---
 title: "Shadcn Studio"
 type: tool
+category: web-dev
+tags: ["mcp", "react", "typescript", "ai", "design"]
+priority: medium
+rating: 4
+status: unread
 date_added: 2026-01-02
-source: "https://github.com/themeselection/shadcn-studio"
-tags: [ui-components, shadcn, react, tailwind, design-system]
-via: "Twitter bookmark from @ShadcnStudio"
----
+last_updated: 2026-01-21
 
+
+---
 Shadcn Studio is an open-source collection of copy-and-paste shadcn/ui components, blocks, and templates paired with a powerful theme generator. It extends the core shadcn/ui offering with more diverse component variants, pre-built blocks, and complete templates for faster UI development.
 
 Unlike traditional npm-installable libraries, shadcn/studio follows the "copy-and-paste" philosophy of shadcn/ui, allowing developers to own and customize all code directly in their projects without library dependencies.
@@ -43,3 +47,4 @@ Unlike traditional npm-installable libraries, shadcn/studio follows the "copy-an
 - [Website](https://shadcnstudio.com)
 - [GitHub](https://github.com/themeselection/shadcn-studio)
 - [Original Tweet](https://x.com/ShadcnStudio/status/2005964727806222598)
+

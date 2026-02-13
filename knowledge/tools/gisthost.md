@@ -1,12 +1,16 @@
 ---
 title: "gisthost.github.io"
 type: tool
+category: web-dev
+tags: ["go", "ai"]
+priority: low
+rating: 3
+status: unread
 date_added: 2026-01-02
-source: "https://github.com/simonwillison/gisthost"
-tags: [github-gists, html-preview, developer-tools]
-via: "Twitter bookmark from @simonw"
----
+last_updated: 2026-01-21
 
+
+---
 A fork and modernized version of gistpreview.github.io that enables browser-rendering of HTML files stored in GitHub Gists. Simon Willison updated the original project (last commit 10 years ago) with modern web practices and improved CSS.
 
 The tool works by fetching GitHub Gist content via the GitHub API and rendering it as HTML in the browser, bypassing GitHub's content-type headers that normally serve Gist files as plain text.
@@ -31,3 +35,4 @@ The tool works by fetching GitHub Gist content via the GitHub API and rendering 
 - [Live Tool](https://gisthost.github.io/)
 - [Original Tweet](https://x.com/simonw/status/2006851664935006385)
 - [Blog Post](https://simonwillison.net/2026/Jan/1/gisthost/)
+

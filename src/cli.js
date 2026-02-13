@@ -112,7 +112,9 @@ This will set up Smaug to automatically archive your Twitter bookmarks.
   console.log('\nStep 3: Testing credentials...');
   try {
     const env = { ...process.env, AUTH_TOKEN: authToken, CT0: ct0 };
-    execSync('bird bookmarks -n 1 --json', { env, stdio: 'pipe', timeout: 30000 });
+    // Use CLI arguments for @jcheesepkg/bird
+    const testCmd = `bird --auth-token "${authToken}" --ct0 "${ct0}" bookmarks -n 1 --json`;
+    execSync(testCmd, { env, stdio: 'pipe', timeout: 30000 });
     console.log('  ✓ Credentials work!\n');
   } catch (error) {
     console.log(`  ✗ Could not fetch bookmarks. Check your credentials and try again.

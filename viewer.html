@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smaug Bookmark Viewer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #0f0f0f;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            border-bottom: 1px solid #333;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        header p {
+            color: #888;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #f97316;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-tab {
+            padding: 10px 20px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #888;
+        }
+
+        .nav-tab:hover {
+            background: #252525;
+            color: #e0e0e0;
+        }
+
+        .nav-tab.active {
+            background: #f97316;
+            border-color: #f97316;
+            color: #000;
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #f97316;
+        }
+
+        .category-filter {
+            padding: 10px 16px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #e0e0e0;
+            cursor: pointer;
+        }
+
+        .content-area {
+            display: none;
+        }
+
+        .content-area.active {
+            display: block;
+        }
+
+        .category-section {
+            margin-bottom: 40px;
+        }
+
+        .category-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #f97316;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-count {
+            background: #333;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 16px;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            border-color: #f97316;
+            transform: translateY(-2px);
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title .stars {
+            color: #fbbf24;
+            font-size: 0.9rem;
+        }
+
+        .card-meta {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #333;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        .tag.priority-high {
+            background: #7c2d12;
+            color: #f97316;
+        }
+
+        .tag.priority-medium {
+            background: #78350f;
+            color: #f59e0b;
+        }
+
+        .card-desc {
+            font-size: 0.9rem;
+            color: #666;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border-radius: 12px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .modal-close:hover {
+            background: #333;
+            color: #e0e0e0;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #e0e0e0;
+        }
+
+        .modal-meta {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .modal-body {
+            color: #888;
+            line-height: 1.8;
+        }
+
+        .modal-body h3 {
+            color: #e0e0e0;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .modal-body ul {
+            margin-left: 20px;
+        }
+
+        .modal-body li {
+            margin-bottom: 5px;
+        }
+
+        .modal-links {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+
+        .modal-links a {
+            color: #f97316;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .modal-links a:hover {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐉 Smaug Bookmark Viewer</h1>
+            <p>Knowledge archive curated from Twitter bookmarks and other sources</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value" id="totalItems">210</div>
+                    <div class="stat-label">Total Items</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="toolsCount">196</div>
+                    <div class="stat-label">Tools</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="articlesCount">14</div>
+                    <div class="stat-label">Articles</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="categoriesCount">13</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-tab="tools">Tools</div>
+            <div class="nav-tab" data-tab="articles">Articles</div>
+            <div class="nav-tab" data-tab="bookmarks">All Bookmarks</div>
+        </div>
+
+        <div class="filters">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search...">
+            </div>
+            <select class="category-filter" id="categoryFilter">
+                <option value="">All Categories</option>
+            </select>
+            <select class="category-filter" id="priorityFilter">
+                <option value="">All Priorities</option>
+                <option value="high">High Priority</option>
+                <option value="medium">Medium Priority</option>
+                <option value="low">Low Priority</option>
+            </select>
+            <select class="category-filter" id="ratingFilter">
+                <option value="">All Ratings</option>
+                <option value="5">5 Stars</option>
+                <option value="4">4+ Stars</option>
+                <option value="3">3+ Stars</option>
+            </select>
+        </div>
+
+        <div id="toolsContent" class="content-area active">
+            <div id="toolsGrid"></div>
+        </div>
+
+        <div id="articlesContent" class="content-area">
+            <div id="articlesGrid"></div>
+        </div>
+
+        <div id="bookmarksContent" class="content-area">
+            <div id="bookmarksList"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div class="modal-meta" id="modalMeta"></div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-links" id="modalLinks"></div>
+        </div>
+    </div>
+
+    <script>
+        const DATA = {
+            tools: [],
+            articles: [],
+            bookmarks: []
+        };
+
+        const CATEGORIES = {
+            'ai-ml': 'AI/ML',
+            'web-dev': 'Web Dev',
+            'dev-tools': 'Dev Tools',
+            'backend': 'Backend',
+            'design': 'Design',
+            'mobile': 'Mobile',
+            'data': 'Data',
+            'security': 'Security',
+            'testing': 'Testing',
+            'gaming': 'Gaming',
+            'productivity': 'Productivity',
+            'learning': 'Learning',
+            'other': 'Other'
+        };
+
+        // Parse markdown frontmatter
+        function parseFrontmatter(content) {
+            const match = content.match(/^---\n([\s\S]+?)\n---/);
+            if (!match) return null;
+            
+            const frontmatter = {};
+            const lines = match[1].split('\n');
+            
+            for (const line of lines) {
+                const colonPos = line.indexOf(':');
+                if (colonPos > 0) {
+                    const key = line.slice(0, colonPos).trim();
+                    let value = line.slice(colonPos + 1).trim();
+                    
+                    if (value.startsWith('"') && value.endsWith('"')) {
+                        value = value.slice(1, -1);
+                    } else if (value.startsWith('[') && value.endsWith(']')) {
+                        value = value.slice(1, -1).split(',').map(v => v.trim().replace(/"/g, ''));
+                    }
+                    
+                    frontmatter[key] = value;
+                }
+            }
+            
+            return frontmatter;
+        }
+
+        // Parse bookmarks.md
+        function parseBookmarks(content) {
+            const bookmarks = [];
+            const lines = content.split('\n');
+            let currentDate = '';
+            let currentBookmark = null;
+            
+            for (const line of lines) {
+                const dateMatch = line.match(/^#\s+(.+,\s+\w+\s+\d+,\s+\d+)/);
+                if (dateMatch) {
+                    currentDate = dateMatch[1];
+                    continue;
+                }
+                
+                const titleMatch = line.match(/^##\s+@(.+)\s+-\s+(.+)/);
+                if (titleMatch) {
+                    if (currentBookmark && currentBookmark.tweet) {
+                        bookmarks.push(currentBookmark);
+                    }
+                    currentBookmark = {
+                        author: titleMatch[1],
+                        title: titleMatch[2],
+                        date: currentDate,
+                        what: ''
+                    };
+                    continue;
+                }
+                
+                if (currentBookmark) {
+                    const tweetMatch = line.match(/\*\*Tweet:\*\*\s+(https:.+)/);
+                    if (tweetMatch) {
+                        currentBookmark.tweet = tweetMatch[1];
+                        continue;
+                    }
+                    
+                    const linkMatch = line.match(/\*\*Link:\*\*\s+(https?.+)/);
+                    if (linkMatch) {
+                        currentBookmark.link = linkMatch[1];
+                        continue;
+                    }
+                    
+                    const filedMatch = line.match(/\*\*Filed:\*\*\s+\[([^\]]+)\]\(([^)]+)\)/);
+                    if (filedMatch) {
+                        currentBookmark.filed = { title: filedMatch[1], path: filedMatch[2] };
+                        continue;
+                    }
+                    
+                    const whatMatch = line.match(/>\s*(.+)/);
+                    if (whatMatch) {
+                        currentBookmark.quote = whatMatch[1];
+                        continue;
+                    }
+                    
+                    const whatMatch2 = line.match(/\*\*What:\*\*\s+(.+)/);
+                    if (whatMatch2) {
+                        currentBookmark.what = whatMatch2[1];
+                        continue;
+                    }
+                }
+            }
+            
+            if (currentBookmark && currentBookmark.tweet) {
+                bookmarks.push(currentBookmark);
+            }
+            
+            return bookmarks;
+        }
+
+        // Load data
+        async function loadData() {
+            try {
+                // Load tools
+                const toolsResponse = await fetch('.state/enhancement-stats.json');
+                const stats = await toolsResponse.json();
+                
+                // Process tools
+                for (const tool of stats.tools) {
+                    const response = await fetch(`knowledge/tools/${tool.file}`);
+                    const content = await response.text();
+                    const fm = parseFrontmatter(content);
+                    
+                    DATA.tools.push({
+                        ...tool,
+                        ...fm,
+                        path: `knowledge/tools/${tool.file}`,
+                        content: content
+                    });
+                }
+                
+                // Process articles
+                for (const article of stats.articles) {
+                    const response = await fetch(`knowledge/articles/${article.file}`);
+                    const content = await response.text();
+                    const fm = parseFrontmatter(content);
+                    
+                    DATA.articles.push({
+                        ...article,
+                        ...fm,
+                        path: `knowledge/articles/${article.file}`,
+                        content: content
+                    });
+                }
+                
+                // Load bookmarks
+                const bookmarksResponse = await fetch('bookmarks.md');
+                const bookmarksContent = await bookmarksResponse.text();
+                DATA.bookmarks = parseBookmarks(bookmarksContent);
+                
+                // Populate category filter
+                const categories = new Set();
+                [...DATA.tools, ...DATA.articles].forEach(item => {
+                    if (item.category) categories.add(item.category);
+                });
+                
+                const categoryFilter = document.getElementById('categoryFilter');
+                Array.from(categories).sort().forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat;
+                    option.textContent = CATEGORIES[cat] || cat;
+                    categoryFilter.appendChild(option);
+                });
+                
+                renderTools();
+                renderArticles();
+                renderBookmarks();
+            } catch (error) {
+                console.error('Error loading data:', error);
+            }
+        }
+
+        function renderCard(item) {
+            const stars = '★'.repeat(item.rating || 3);
+            const priorityClass = item.priority ? `priority-${item.priority}` : '';
+            
+            return `
+                <div class="card" onclick="showModal('${item.path}', '${item.type || 'tool'}')">
+                    <div class="card-title">
+                        ${item.title || item.file}
+                        ${item.rating >= 4 ? `<span class="stars">${stars}</span>` : ''}
+                    </div>
+                    <div class="card-meta">
+                        <span class="tag ${priorityClass}">${item.priority || 'low'}</span>
+                        <span class="tag">${CATEGORIES[item.category] || item.category}</span>
+                    </div>
+                    <div class="card-meta">
+                        ${(item.tags || []).slice(0, 3).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTools() {
+            const grid = document.getElementById('toolsGrid');
+            const filtered = filterItems(DATA.tools);
+            
+            // Group by category
+            const grouped = {};
+            filtered.forEach(item => {
+                const cat = item.category || 'other';
+                if (!grouped[cat]) grouped[cat] = [];
+                grouped[cat].push(item);
+            });
+            
+            let html = '';
+            for (const [category, items] of Object.entries(grouped).sort((a, b) => b[1].length - a[1].length)) {
+                html += `
+                    <div class="category-section">
+                        <div class="category-title">
+                            ${CATEGORIES[category] || category}
+                            <span class="category-count">${items.length}</span>
+                        </div>
+                        <div class="grid">
+                            ${items.map(renderCard).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            grid.innerHTML = html || '<p style="color: #888; text-align: center; padding: 40px;">No items found</p>';
+        }
+
+        function renderArticles() {
+            const grid = document.getElementById('articlesGrid');
+            const filtered = filterItems(DATA.articles);
+            
+            const grouped = {};
+            filtered.forEach(item => {
+                const cat = item.category || 'other';
+                if (!grouped[cat]) grouped[cat] = [];
+                grouped[cat].push(item);
+            });
+            
+            let html = '';
+            for (const [category, items] of Object.entries(grouped).sort((a, b) => b[1].length - a[1].length)) {
+                html += `
+                    <div class="category-section">
+                        <div class="category-title">
+                            ${CATEGORIES[category] || category}
+                            <span class="category-count">${items.length}</span>
+                        </div>
+                        <div class="grid">
+                            ${items.map(renderCard).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            grid.innerHTML = html || '<p style="color: #888; text-align: center; padding: 40px;">No items found</p>';
+        }
+
+        function renderBookmarks() {
+            const list = document.getElementById('bookmarksList');
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            
+            const filtered = DATA.bookmarks.filter(b => {
+                if (!search) return true;
+                return (b.title || '').toLowerCase().includes(search) ||
+                       (b.what || '').toLowerCase().includes(search) ||
+                       (b.author || '').toLowerCase().includes(search);
+            });
+            
+            let html = '<div class="category-section">';
+            html += filtered.map(b => `
+                <div class="card" style="margin-bottom: 10px;">
+                    <div class="card-title">${b.title}</div>
+                    <div class="card-meta">
+                        <span class="tag">@${b.author}</span>
+                        <span class="tag">${b.date}</span>
+                    </div>
+                    ${b.quote ? `<p style="color: #888; font-size: 0.9rem; margin: 10px 0;">"${b.quote}"</p>` : ''}
+                    ${b.what ? `<p style="color: #666; font-size: 0.85rem;">${b.what}</p>` : ''}
+                    ${b.link ? `<a href="${b.link}" target="_blank" style="color: #f97316;">View Link →</a>` : ''}
+                    ${b.tweet ? `<a href="${b.tweet}" target="_blank" style="color: #f97316; margin-left: 15px;">View Tweet →</a>` : ''}
+                </div>
+            `).join('');
+            html += '</div>';
+            
+            list.innerHTML = html || '<p style="color: #888; text-align: center; padding: 40px;">No bookmarks found</p>';
+        }
+
+        function filterItems(items) {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            const priority = document.getElementById('priorityFilter').value;
+            const rating = document.getElementById('ratingFilter').value;
+            
+            return items.filter(item => {
+                if (search && !item.title?.toLowerCase().includes(search)) {
+                    const tagsMatch = (item.tags || []).some(tag => tag.toLowerCase().includes(search));
+                    if (!tagsMatch) return false;
+                }
+                
+                if (category && item.category !== category) return false;
+                if (priority && item.priority !== priority) return false;
+                if (rating && item.rating < parseInt(rating)) return false;
+                
+                return true;
+            });
+        }
+
+        async function showModal(path, type) {
+            const modal = document.getElementById('modal');
+            const response = await fetch(path);
+            const content = await response.text();
+            const fm = parseFrontmatter(content);
+            
+            document.getElementById('modalTitle').textContent = fm.title || 'Untitled';
+            
+            let metaHtml = '';
+            if (fm.category) metaHtml += `<span class="tag">${CATEGORIES[fm.category] || fm.category}</span>`;
+            if (fm.priority) metaHtml += `<span class="tag priority-${fm.priority}">${fm.priority}</span>`;
+            if (fm.rating) metaHtml += `<span class="tag">${'★'.repeat(fm.rating)}</span>`;
+            if (fm.stars) metaHtml += `<span class="tag">⭐ ${fm.stars}</span>`;
+            if (fm.language) metaHtml += `<span class="tag">${fm.language}</span>`;
+            document.getElementById('modalMeta').innerHTML = metaHtml;
+            
+            // Get content after frontmatter
+            const bodyMatch = content.match(/^---[\s\S]+?---\n([\s\S]+)/);
+            const body = bodyMatch ? bodyMatch[1] : content;
+            document.getElementById('modalBody').innerHTML = `<div style="white-space: pre-wrap;">${body}</div>`;
+            
+            let linksHtml = '';
+            if (fm.source) linksHtml += `<a href="${fm.source}" target="_blank">📦 GitHub</a>`;
+            if (fm.via) linksHtml += `<a style="margin-left: 15px;">${fm.via}</a>`;
+            document.getElementById('modalLinks').innerHTML = linksHtml;
+            
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Event listeners
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.content-area').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab + 'Content').classList.add('active');
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', () => {
+            const activeTab = document.querySelector('.nav-tab.active').dataset.tab;
+            if (activeTab === 'tools') renderTools();
+            else if (activeTab === 'articles') renderArticles();
+            else renderBookmarks();
+        });
+
+        document.getElementById('categoryFilter').addEventListener('change', () => {
+            const activeTab = document.querySelector('.nav-tab.active').dataset.tab;
+            if (activeTab === 'tools') renderTools();
+            else if (activeTab === 'articles') renderArticles();
+        });
+
+        document.getElementById('priorityFilter').addEventListener('change', () => {
+            const activeTab = document.querySelector('.nav-tab.active').dataset.tab;
+            if (activeTab === 'tools') renderTools();
+            else if (activeTab === 'articles') renderArticles();
+        });
+
+        document.getElementById('ratingFilter').addEventListener('change', () => {
+            const activeTab = document.querySelector('.nav-tab.active').dataset.tab;
+            if (activeTab === 'tools') renderTools();
+            else if (activeTab === 'articles') renderArticles();
+        });
+
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Load data on page load
+        loadData();
+    </script>
+</body>
+</html>
