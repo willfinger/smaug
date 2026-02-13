@@ -1,33 +1,43 @@
 # Smaug Knowledge Base
 
-> Knowledge archive curated from Twitter bookmarks and other sources.
+> Knowledge archive curated from Twitter/X bookmarks and GitHub stars.
 
 ## Overview
 
 | Metric | Count |
 |--------|-------|
-| **Total Items** | 210 |
-| Tools | 196 |
-| Articles | 14 |
+| **Total Items** | 2,925 |
+| X.com Bookmarks | 2,669 |
+| Tools | 237 (207 + 30 GitHub stars) |
+| Articles | 19 |
 | Categories | 13 |
 
 ## Quick Navigation
 
-- [Tools Index](tools/README.md) - Browse all tools
+- [Bookmarks Archive](../bookmarks.md) - All 2,669 X.com bookmarks
+- [Tools Index](tools/README.md) - Browse all tools (sorted by stars + date)
 - [Articles Index](articles/README.md) - Browse all articles
+
+## X.com Bookmarks Statistics
+
+- **Total:** 2,669 bookmarks
+- **Date Range:** Sorted newest first
+- **Top Keywords:** AI (2,185), UI (1,216), design (1,191), Claude (329), Cursor (262)
+
+## GitHub Stars
+
+- **Starred Repos:** 30
+- **Total Stars:** ~95,000+
+- **Top Tools:** agent-browser (13.9k), RAG-Anything (13k), eigent (12.3k), json-render (10.5k)
 
 ## By Category
 
-- **ai-ml**: 79 items
-- **dev-tools**: 54 items
-- **web-dev**: 26 items
-- **design**: 17 items
-- **backend**: 13 items
-- **mobile**: 4 items
-- **data**: 4 items
-- **other**: 3 items
-- **productivity**: 3 items
-- **learning**: 3 items
+- **ai-agents**: 25 tools
+- **skills**: 12 tools
+- **openclaw/opencode**: 5 tools
+- **ui/design**: 8 tools
+- **devtools**: 8 tools
+- **other**: 10+ tools
 - **gaming**: 2 items
 - **security**: 1 items
 - **testing**: 1 items

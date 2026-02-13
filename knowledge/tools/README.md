@@ -1,8 +1,40 @@
 # Tools Index
 
-**Total:** 197 tools
+**Total:** 237 tools (including 30 GitHub stars)
 
-**Last Updated:** 2026-01-21
+**Last Updated:** 2026-02-13
+
+---
+
+## GitHub Stars (Sorted by Date - Newest First)
+
+| Tool | Stars | Created | Category |
+|------|-------|---------|----------|
+| [sene1337/content-review](sene1337-content-review.md) | 5 | 2026-02-12 | skills |
+| [joeynyc/skillscore](joeynyc-skillscore.md) | 1 | 2026-02-11 | skills |
+| [revylai/greenlight](revylai-greenlight.md) | 710 | 2026-02-11 | ai-agents |
+| [hesamsheikh/awesome-openclaw-usecases](hesamsheikh-awesome-openclaw-usecases.md) | 1,928 | 2026-02-08 | openclaw |
+| [luccast/crabwalk](luccast-crabwalk.md) | 765 | 2026-01-25 | ai-agents |
+| [islee23520/opencode-sidebar-tui](islee23520-opencode-sidebar-tui.md) | 12 | 2026-01-25 | opencode |
+| [lekt9/unbrowse-openclaw](lekt9-unbrowse-openclaw.md) | 306 | 2026-01-27 | openclaw |
+| [tanweai/wooyun-legacy](tanweai-wooyun-legacy.md) | 1,225 | 2026-01-23 | skills |
+| [blader/humanizer](blader-humanizer.md) | 4,751 | 2026-01-18 | skills |
+| [blader/claudeception](blader-claudeception.md) | 1,617 | 2026-01-17 | skills |
+| [vercel-labs/json-render](vercel-labs-json-render.md) | 10,513 | 2026-01-14 | ui |
+| [solana-foundation/solana-dev-skill](solana-foundation-solana-dev-skill.md) | 326 | 2026-01-12 | skills |
+| [vercel-labs/agent-browser](vercel-labs-agent-browser.md) | 13,966 | 2026-01-11 | ai-agents |
+| [0xdesign/design-plugin](0xdesign-design-plugin.md) | 505 | 2026-01-15 | design |
+| [tobi/qmd](tobi-qmd.md) | 8,250 | 2025-12-08 | devtools |
+| [buildermethods/design-os](buildermethods-design-os.md) | 1,398 | 2025-12-16 | design |
+| [superset-sh/superset](superset-sh-superset.md) | 1,533 | 2025-10-21 | ai-agents |
+| [k-dense-ai/claude-scientific-skills](k-dense-ai-claude-scientific-skills.md) | 8,615 | 2025-10-19 | skills |
+| [rand/cc-polymath](rand-cc-polymath.md) | 71 | 2025-10-18 | skills |
+| [jmagly/aiwg](jmagly-aiwg.md) | 80 | 2025-08-14 | ai-agents |
+| [edison-watch/open-edison](edison-watch-open-edison.md) | 274 | 2025-08-05 | security |
+| [eigent-ai/eigent](eigent-ai-eigent.md) | 12,375 | 2025-07-29 | desktop |
+| [hkuds/RAG-Anything](hkuds-rag-anything.md) | 13,049 | 2025-06-06 | ai-agents |
+
+---
 
 ## By Category
 
